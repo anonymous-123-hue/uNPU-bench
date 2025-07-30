@@ -1,5 +1,7 @@
 # µNPU-Bench
 
+### This repo accompanies our paper, "[Benchmarking Ultra-Low-Power μNPUs](https://arxiv.org/abs/2503.22567)", accepted at [The 31st International Conference on Mobile Computing and Networking](https://www.sigmobile.org/mobicom/2025/).
+
 This repo includes a model compiler wrapper and deployment pipeline for a variety of MCU-scale neural processing units (µNPUs). It automates model export, quantization, compilation, and deployment code generation using platform-specific toolchains, all from a single Torch-based source model.
 
 ---
@@ -29,11 +31,9 @@ This repo includes a model compiler wrapper and deployment pipeline for a variet
 ## Setup  
 
 ### Automatic: Docker (All toolchains)  
-First, [download eIQ Toolkit 1.12.1 Ubuntu 20.04 Installer](https://www.nxp.com/design/design-center/software/eiq-ai-development-environment/eiq-toolkit-for-end-to-end-model-development-and-deployment:EIQ-TOOLKIT) and place it in current working directory.  
-Then run:
 ```bash
 docker build -t unpu-bench .  
-docker run --rm -it -v $(pwd):/workspace unpu-bench  
+docker run --rm -it -v $(pwd):/workspace unpu-bench bash  
 ```
 **⚠️ Requires Linux x86_64 (for CVI & eIQ support)**
 
@@ -47,7 +47,7 @@ docker run --rm -it -v $(pwd):/workspace unpu-bench
 
 | Platform             | Setup                                                                                                                                              |
 |----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**ai8x**](https://github.com/analogdevicesinc/ai8x-synthesis)             | - Clone repo: `git clone --recursive https://github.com/analogdevicesinc/ai8x-training`<br>- Set env var: `export AI8X_TRAIN_PATH=/path/to/ai8x-training` |
+| [**ai8x**](https://github.com/analogdevicesinc/ai8x-synthesis)             | - Clone repo: `git clone --recursive https://github.com/analogdevicesinc/ai8x-training`<br>- Set env var: `export AI8X_TRAIN_PATH=/path/to/ai8x-training` <br>- Set env var: `export AI8X_SYNTH_PATH=/path/to/ai8x-synthesis`|
 | [**eIQ**](https://www.nxp.com/design/design-center/software/eiq-ai-development-environment:EIQ)              | - Download [eIQ Toolkit](https://www.nxp.com/design/design-center/software/eiq-ai-development-environment/eiq-toolkit-for-end-to-end-model-development-and-deployment:EIQ-TOOLKIT) <br>- Set env var: `export EIQ_NEUTRON_PATH=/path/to/neutron-converter` |
 | [**CVI**](https://github.com/sophgo/tpu-mlir)              | Use Docker image (Linux only)                                                                                                                       |
 | [**ONNX**](https://onnx.ai/), [**TFLM**](https://github.com/tensorflow/tflite-micro), [**Vela**](https://developer.arm.com/documentation/109267/latest/Tool-support-for-the-Arm-Ethos-U-NPU/Ethos-U-Vela-compiler) | No extra setup needed     
@@ -175,9 +175,8 @@ Below are additional CLI arguments specific to each target format, defined in `p
 ## Adding New Formats or Platforms
 
 ### Add Format
-Define its compiler backend: ```model_gen/<yourformat>.py``` with ```export(...)```
-
-Optionally, add C codegen: ```code_gen.py```
+Define its compiler backend: model_gen/<yourformat>.py with export(...)
+Optionally, add C codegen: code_gen.py
 
 ### Add to platforms.yaml
 
@@ -198,3 +197,21 @@ vela:
 ```
 
 Dynamic CLI flags are parsed automatically.
+
+---
+
+## Citation
+
+If you use this or find it helpful, please consider citing our work:
+
+```bash
+@misc{unpu-bench,
+      title={Benchmarking Ultra-Low-Power $\mu$NPUs}, 
+      author={Josh Millar and Yushan Huang and Sarab Sethi and Hamed Haddadi and Anil Madhavapeddy},
+      year={2025},
+      eprint={2503.22567},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2503.22567}, 
+}
+```
