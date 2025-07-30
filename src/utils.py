@@ -157,7 +157,7 @@ def make_out_dir(args):
     else:
         if is_empty(out_dir):
             os.makedirs(out_dir, exist_ok=True)
-            print(f"📁 Using output directory: {out_dir}")
+            print(f"Using output directory: {out_dir}")
         else:
             base_backup = out_dir + "_backup"
             backup_dir = base_backup
@@ -168,7 +168,7 @@ def make_out_dir(args):
 
             # shutil.move(out_dir, backup_dir)
             os.makedirs(backup_dir)
-            print(f"⚠️  Output directory was not empty. Created: {backup_dir}")
+            print(f"Output directory was not empty. Created: {backup_dir}")
             out_dir = backup_dir
 
     args.out_dir = out_dir
