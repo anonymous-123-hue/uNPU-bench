@@ -112,9 +112,9 @@ def onnx2tflm(onnx_path, args):
 
 def setup_ai8x(device_id=85, use_8bit=True):
     try:
-        ai8x_root = os.environ.get("AI8X_TRAIN_PATH")
-        if ai8x_root not in sys.path:
-            sys.path.insert(0, ai8x_root)
+        ai8x_train = os.environ.get("AI8X_TRAIN_PATH")
+        if ai8x_train not in sys.path:
+            sys.path.insert(0, ai8x_train)
         import ai8x
         ai8x.set_device(device_id, 0, use_8bit)
         return ai8x
@@ -184,12 +184,11 @@ def run_subproc(command, debug, error_msg):
             output_lines.append(line)
         process.wait()
         if process.returncode != 0:
-            # if not debug:
-            #     print(''.join(output_lines), end="") 
+            if not debug:
+                print(''.join(output_lines), end="") 
             print(f"{error_msg} (exit code {process.returncode})")
             return None
         return True
     except Exception as e:
         print(f"{error_msg}: {e}")
         return None
-
