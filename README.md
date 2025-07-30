@@ -38,7 +38,7 @@ docker run --rm -it -v $(pwd):/workspace unpu-bench bash
 ### 🔧 Manual  
 1. **Install Python dependencies:**  
    ```bash
-        pip install -r requirements.txt  
+   pip install -r requirements.txt  
     ```
 
 2. **Optional: Platform-Specific Setup**   
